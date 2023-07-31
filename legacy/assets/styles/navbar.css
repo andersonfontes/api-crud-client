@@ -1,0 +1,22 @@
+.navbar {
+    margin: 15px 0;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.navbar a {
+    padding: 15px;
+    text-decoration: none;
+    transition: background .2s;
+}
+
+.navbar a:hover {
+    background: #545454;
+    color: #fff;
+    transition: background .2s;
+}

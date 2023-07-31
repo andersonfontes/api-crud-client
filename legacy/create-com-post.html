@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de produtos</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="titulo-pagina">Create usando o método POST</h1>
+    </header>
+
+    <div id="resposta"></div>
+    
+    <div class="formulario">
+
+        <h2 class="titulo-formulario">Cadastro de Produtos</h2>
+
+        <form class="" method="post">
+
+            <div class="controle-formulario">
+                <label class="disabled" for="id">ID</label>
+                <input type="text" id="id" placeholder="o ID será criado automaticamente" disabled>
+            </div>
+    
+            <div class="controle-formulario">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" placeholder="digite a descrição do produto">
+            </div>
+    
+            <div class="controle-formulario">
+                <label for="preco">Preço</label>
+                <input type="text" id="preco" placeholder="digite o preço do produto">
+            </div>
+    
+            <div class="controle-formulario">
+                <label for="imagem">Imagem</label>
+                <input type="text" id="imagem" placeholder="digite o nome da imagem do produto">
+            </div>
+    
+            <div class="botoes">
+                <button class="bt bt-confirmar" type="button" id="btConfirmar" disabled>Cadastrar</button>
+                <button class="bt bt-cancelar" type="reset" id="btCancelar" disabled>Cancelar</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div id="listaProdutos"></div>
+
+    <script src="./assets/scripts/styles.js"></script>
+    <script src="./assets/scripts/navbar.js"></script>
+    
+    <script type="module" src="./assets/scripts/create-com-post.js"></script>
+</body>
+
+</html>
