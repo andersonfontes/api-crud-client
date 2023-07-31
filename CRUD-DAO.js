@@ -206,7 +206,6 @@ function deleta(idDoProdutoDelete) {
   }
 }
 
-
 function mostraEditar(idDoProdutoEdit) {
   //mostra ou oculta a tela de edição quando o usuário clica no botão EDITAR   (alterna)
 
