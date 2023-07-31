@@ -275,10 +275,6 @@ function salvarAlteracao() {
   div.classList.add("div-editar-inativo");
 }
 
-// function criaId() {
-//deprecado, virou função fetch callback lá dentro do mostraCadastrar
-// }
-
 function mostraView(idVisualizar) {
   //mostra ou oculta a tela de VISUALIZAÇÃO quando o usuário clica no botão VISUALIZAR   (alterna)
   const div = document.getElementById("div-view");
