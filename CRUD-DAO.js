@@ -87,14 +87,14 @@ function getprodutos() {
 
 function cadastrar() {
   //Esta função irá cadastrar um novo produto no array de produtos
-  fetch("https://api-crud-server-ok.vercel.app/produtos", {
-    method: "GET",
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
-    .then((resposta) => resposta.json())
-    .then((produtos) => {
+  // fetch("https://api-crud-server-ok.vercel.app/produtos", {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-type": "application/json",
+  //   },
+  // })
+  //   .then((resposta) => resposta.json())
+  //   .then((produtos) => {
       //PASSO 1: pegando as informações que o usuario digitou e colocando em variaveis
       const idInsere = parseInt(document.getElementById("id").value);
       const nomeInsere = document.querySelector("#nome").value;
@@ -123,7 +123,7 @@ function cadastrar() {
         div.classList.remove("div-cadastrar-ativo");
         div.classList.add("div-cadastrar-inativo");
         alert("PRODUTO CADASTRADO COM SUCESSO");
-      });
+      // });
     });
 }
 
