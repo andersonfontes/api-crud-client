@@ -114,16 +114,15 @@ function cadastrar() {
           "Content-type": "application/json",
         },
         body: JSON.stringify(produto),
-      }).then((response) => {
-        //zerar e atualizar a tabela
-        limpaTabela();
-        getprodutos();
+      }).then((response) => {        
+          limpaTabela();
+          getprodutos();    
 
-        //mensagem de alteração salva e escondo a div
-        alert("PRODUTO CADASTRADO COM SUCESSO");
+        //mensagem de alteração salva e escondo a div        
         div = document.getElementById("div-cadastrar");
         div.classList.remove("div-cadastrar-ativo");
         div.classList.add("div-cadastrar-inativo");
+        alert("PRODUTO CADASTRADO COM SUCESSO");
       });
     });
 }
@@ -190,17 +189,23 @@ function deleta(idDoProdutoDelete) {
                         ESTA AÇÃO NÃO PODE SER DESFEITA`;
 
   if (confirm(textConfirmacao) == true) {
-    let obj = produtos.find((prod) => prod.id == idDoProdutoDelete);
-    let indexDeletar = produtos.indexOf(obj);
-
-    produtos.splice(indexDeletar, 1);
-
-    limpaTabela();
-    getprodutos();
-  } else {
-    alert("OPERAÇÃO CANCELADA - NÃO HOUVE ALTERAÇÕES");
+    fetch(
+      `https://api-crud-server-ok.vercel.app/produtos/${idDoProdutoDelete}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    ).then((resposta) => {      
+        limpaTabela();
+        getprodutos();
+        alert("PRODUTO APAGADO!");
+      } )
+    
   }
 }
+
 
 function mostraEditar(idDoProdutoEdit) {
   //mostra ou oculta a tela de edição quando o usuário clica no botão EDITAR   (alterna)
@@ -253,26 +258,29 @@ function salvarAlteracao() {
   const precoEditar = parseInt(document.getElementById("precoEdit").value);
 
   //crio um objeto com esses valores
-  let objNovo = { id: idEditar, nome: nomeEditar, preco: precoEditar };
+  //let objNovo = { id: idEditar, nome: nomeEditar, preco: precoEditar };
 
-  //encontrar o objeto antigo a ser substituído no vetor
-  let objAntigo = produtos.find((prod) => prod.id == idEditar);
-
-  //buscar o indice do objeto antigo no vetor
-  let indexEditar = produtos.indexOf(objAntigo);
-
-  //utilizo o método SPLICE para substituir o objeto no vetor
-  produtos.splice(indexEditar, 1, objNovo);
-
-  //atualizo a listagem
-  limpaTabela();
-  getprodutos();
-
-  //mensagem de alteração salva e escondo a div
-  alert("ALTERAÇÕES SALVAS");
-  div = document.getElementById("div-editar");
-  div.classList.remove("div-editar-ativo");
-  div.classList.add("div-editar-inativo");
+  // Atualiza o produto
+  fetch(`https://api-crud-server-ok.vercel.app/produtos/${idEditar}`, {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      id: idEditar,
+      nome: nomeEditar,
+      preco: precoEditar,
+    }),
+  }).then((response) => {    
+      //atualizo a listagem
+      limpaTabela();
+      getprodutos();          
+       //mensagem de alteração salva e escondo a div       
+       div = document.getElementById("div-editar");
+       div.classList.remove("div-editar-ativo");
+       div.classList.add("div-editar-inativo");
+       alert('PRODUTO ALTERADO');
+  });
 }
 
 function mostraView(idVisualizar) {
@@ -301,9 +309,19 @@ function mostraView(idVisualizar) {
     divEditar.classList.add("div-editar-inativo");
   }
 
-  //traz os dados daquele objeto para visualização
-  let obj = produtos.find((prod) => prod.id == idVisualizar);
-  document.getElementById("idView").value = obj.id;
-  document.getElementById("nomeView").value = obj.nome;
-  document.getElementById("precoView").value = obj.preco;
+  //conecta à API
+fetch(`https://api-crud-server-ok.vercel.app/produtos/${idVisualizar}`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+    .then((resposta) => resposta.json())
+    .then((obj) => {
+      //traz os dados daquele objeto para visualização
+      //let obj = produtos.find((prod) => prod.id == idVisualizar);
+      document.getElementById("idView").value = obj.id;
+      document.getElementById("nomeView").value = obj.nome;
+      document.getElementById("precoView").value = obj.preco;
+    });
 }
