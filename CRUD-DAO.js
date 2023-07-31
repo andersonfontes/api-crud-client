@@ -1,4 +1,7 @@
 //criando um array de objetos. cada objeto tem 3 propriedades, cada propriedade tem um valor
+//esse método foi utilizado no projeto anteiror para estudar o crud com objeto na memória
+//ao invés de comentar todos os lugares em que os comandos manipuladores de objeto e vetor foram utiizados,
+//eles foram deletados para proporcionar um código mais limpo na nova versão com FETCH
 // let produtos =
 //     [
 //         { id: 1, nome: 'sapato', preco: 100.00 },
@@ -102,23 +105,20 @@ function cadastrar() {
         id: idInsere,
         nome: nomeInsere,
         preco: precoInsere,
-      };
+      };   
 
-      //PASSO 3: inserindo o objeto PRODUTO no vetor PRODUTOS na memória
-      //produtos.push(produto);
-
-      //passo 4: inserindo o objeto PRODUTO no DB da API
+      //passo 4: inserindo o objeto PRODUTO na API
       fetch(`https://api-crud-server-ok.vercel.app/produtos`, {
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify(produto),
-      }).then((response) => {        
-          limpaTabela();
-          getprodutos();    
+      }).then((response) => {
+        limpaTabela();
+        getprodutos();
 
-        //mensagem de alteração salva e escondo a div        
+        //mensagem de alteração salva e escondo a div
         div = document.getElementById("div-cadastrar");
         div.classList.remove("div-cadastrar-ativo");
         div.classList.add("div-cadastrar-inativo");
@@ -162,7 +162,7 @@ function mostraCadastro() {
     .then((resposta) => resposta.json())
     .then((produtos) => {
       //uso o SLICE para criar um novo vetor que começa a partir do índice passa no parâmetro
-      //no caso, o parâmetro -1 sempre irá trazer o ultimo elemento do array
+      //no caso, o parâmetro -1 sempre irá trazer o ultimo elemento do array      
 
       let vetorCorte = produtos.slice(-1);
 
@@ -197,18 +197,16 @@ function deleta(idDoProdutoDelete) {
           "Content-type": "application/json",
         },
       }
-    ).then((resposta) => {      
-        limpaTabela();
-        getprodutos();
-        alert("PRODUTO APAGADO!");
-      } )
-    
+    ).then((resposta) => {
+      limpaTabela();
+      getprodutos();
+      alert("PRODUTO APAGADO!");
+    });
   }
 }
 
-function mostraEditar(idDoProdutoEdit) {
+function mostraEditar(idDoProdutoEdit) {    
   //mostra ou oculta a tela de edição quando o usuário clica no botão EDITAR   (alterna)
-
   const div = document.getElementById("div-editar");
   const divCadastro = document.getElementById("div-cadastrar");
   const divView = document.getElementById("div-view");
@@ -242,7 +240,7 @@ function mostraEditar(idDoProdutoEdit) {
   })
     .then((resposta) => resposta.json())
     .then((produtos) => {
-      //traz os dados daquele objeto para edição
+      //traz os dados daquele objeto para os campos de edição
       let obj = produtos.find((prod) => prod.id == idDoProdutoEdit);
       document.getElementById("idEdit").value = obj.id;
       document.getElementById("nomeEdit").value = obj.nome;
@@ -259,7 +257,7 @@ function salvarAlteracao() {
   //crio um objeto com esses valores
   //let objNovo = { id: idEditar, nome: nomeEditar, preco: precoEditar };
 
-  // Atualiza o produto
+  // Atualiza o produto na API
   fetch(`https://api-crud-server-ok.vercel.app/produtos/${idEditar}`, {
     method: "PUT",
     headers: {
@@ -270,15 +268,15 @@ function salvarAlteracao() {
       nome: nomeEditar,
       preco: precoEditar,
     }),
-  }).then((response) => {    
-      //atualizo a listagem
-      limpaTabela();
-      getprodutos();          
-       //mensagem de alteração salva e escondo a div       
-       div = document.getElementById("div-editar");
-       div.classList.remove("div-editar-ativo");
-       div.classList.add("div-editar-inativo");
-       alert('PRODUTO ALTERADO');
+  }).then((response) => {
+    //atualizo a listagem
+    limpaTabela();
+    getprodutos();
+    //mensagem de alteração salva e escondo a div
+    div = document.getElementById("div-editar");
+    div.classList.remove("div-editar-ativo");
+    div.classList.add("div-editar-inativo");
+    alert("PRODUTO ALTERADO");
   });
 }
 
@@ -308,8 +306,8 @@ function mostraView(idVisualizar) {
     divEditar.classList.add("div-editar-inativo");
   }
 
-  //conecta à API
-fetch(`https://api-crud-server-ok.vercel.app/produtos/${idVisualizar}`, {
+  //conecta à API e traz os dados utilizando o ID
+  fetch(`https://api-crud-server-ok.vercel.app/produtos/${idVisualizar}`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
